@@ -29,11 +29,14 @@ class EventCreator
       event.sender_text = sender_text
       event.at_player = at_player
       event.at_player_team = at_player_team
-      evnet.at_player_text = at_player_text
+      event.at_player_text = at_player_text
     else
       Rails.logger.info "New plext_type: #{plext_type}\n#{raw_event.inspect}"
     end
-    pp event.attributes.sort
+
+    event.save!
+  rescue => e
+    Rails.logger.info("General error on creating an event: #{e.inspect}\n#{raw_event}")
   end
 
   def event_id
@@ -45,7 +48,7 @@ class EventCreator
   end
 
   def text
-    raw_event[2]["plext"]["text"]
+    raw_event[2]["plext"]["text"][0..190]
   end
 
   def plext_type
@@ -69,7 +72,7 @@ class EventCreator
   end
 
   def plain_text
-    raw_event[2]["plext"]["markup"][1][1]["plain"]
+    raw_event[2]["plext"]["markup"][1][1]["plain"][0..190]
   end
 
   def portal_name
@@ -101,7 +104,7 @@ class EventCreator
   end
 
   def sender_text
-    raw_event[2]["plext"]["markup"][1][1]["plain"]
+    raw_event[2]["plext"]["markup"][1][1]["plain"][0..190]
   end
 
   def at_player
@@ -113,7 +116,10 @@ class EventCreator
   end
 
   def at_player_text
-    raw_event[2]["plext"]["markup"][3][1]["plain"]
+    raw_event[2]["plext"]["markup"][3][1]["plain"][0..190]
+  rescue => e
+    Rails.logger.info "Error parsing at_player_text: #{e.inspect}\n#{raw_event.inspect}"
+    nil
   end
 
 end

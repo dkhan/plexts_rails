@@ -11,16 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161122204848) do
+ActiveRecord::Schema.define(:version => 20161122211323) do
 
   create_table "events", :force => true do |t|
     t.datetime "generated_at"
-    t.string   "text"
+    t.string   "text",           :limit => 191
     t.string   "plext_type"
     t.integer  "categories"
     t.string   "player"
     t.string   "player_team"
-    t.string   "plain_text"
+    t.string   "plain_text",     :limit => 191
     t.string   "portal_name"
     t.string   "portal_team"
     t.string   "portal_address"
@@ -28,12 +28,12 @@ ActiveRecord::Schema.define(:version => 20161122204848) do
     t.string   "portal_lng"
     t.string   "sender"
     t.string   "sender_team"
-    t.string   "sender_text"
+    t.string   "sender_text",    :limit => 191
     t.string   "at_player"
     t.string   "at_player_team"
-    t.string   "at_player_text"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.string   "at_player_text", :limit => 191
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "team"
     t.string   "ingress_id"
   end
